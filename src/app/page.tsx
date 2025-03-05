@@ -18,7 +18,9 @@ export default function StreamAndDownloadPage() {
     ws.onopen = () => {
       console.log('WebSocket connected');
       // Send the URL in the initial message
-      ws.send(JSON.stringify({ task: "start", url }));
+      if (ws) {
+        ws.send(JSON.stringify({ task: "start", url }));
+      }
     };
   
     ws.onmessage = (event) => {
