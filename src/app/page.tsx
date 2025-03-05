@@ -13,7 +13,7 @@ export default function StreamAndDownloadPage() {
   async function handleSearch() {
     setIsLoading(true);
     
-    ws = new WebSocket('ws://14.225.205.80:9080/ws');
+    ws = new WebSocket('wss://14.225.205.80:9080/ws');
     
     ws.onopen = () => {
       console.log('WebSocket connected');
