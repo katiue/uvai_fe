@@ -8,28 +8,17 @@ import { Search } from "lucide-react";
 export default function StreamAndDownloadPage() {
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   let ws: WebSocket | null = null;
 
   async function handleSearch() {
     setIsLoading(true);
-    setError(null);
-
-    const authToken = process.env.NEXT_PUBLIC_WS_AUTH_TOKEN;
-    
-    if (!authToken) {
-      setError("Authentication token is missing");
-      setIsLoading(false);
-      return;
-    }
-    
     ws = new WebSocket('ws://14.225.218.228/:80/ws');
     
     ws.onopen = () => {
       console.log('WebSocket connected');
       // Send the URL in the initial message
       if (ws) {
-        ws.send(JSON.stringify({ url , authentication: authToken}));
+        ws.send(JSON.stringify({ url }));
       }
     };
   
@@ -89,12 +78,6 @@ export default function StreamAndDownloadPage() {
           <span className="sr-only">Search</span>
         </Button>
       </div>
-
-      {error && (
-        <div className="text-red-500 bg-red-100 p-3 rounded">
-          {error}
-        </div>
-      )}
 
       {/* Preview Container for the streamed image/html */}
       <div
