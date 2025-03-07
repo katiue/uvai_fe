@@ -23,7 +23,7 @@ export default function StreamAndDownloadPage() {
       return;
     }
     
-    ws = new WebSocket('ws://14.225.205.80:80/ws');
+    ws = new WebSocket('wss://14.225.205.80:80/ws');
     
     ws.onopen = () => {
       console.log('WebSocket connected');
