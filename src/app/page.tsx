@@ -23,7 +23,7 @@ export default function StreamAndDownloadPage() {
       return;
     }
     
-    ws = new WebSocket('wss://14.225.205.80:80/ws');
+    ws = new WebSocket('ws://14.225.218.228/:80/ws');
     
     ws.onopen = () => {
       console.log('WebSocket connected');
@@ -35,19 +35,7 @@ export default function StreamAndDownloadPage() {
   
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      switch (data.type) {
-        case 'image':
-          updatePreview(data.data);  // data.data is expected to be HTML for the preview
-          break;
-        case 'status':
-          handleCompletion(data.data);
-          break;
-        case 'error':
-          handleError(data.data);
-          break;
-        default:
-          console.log("Unknown message type:", data);
-      }
+      updatePreview(data.data);
     };
   
     ws.onclose = () => {
@@ -71,21 +59,9 @@ export default function StreamAndDownloadPage() {
     }
   }
   
-  function handleCompletion(message: string) {
-    console.log('Task completed:', message);
-    if (ws) ws.close();
-  }
-  
   function handleError(error: string) {
     console.error('Error:', error);
     if (ws) ws.close();
-  }
-  
-  // To stop the connection
-  function stopAgent() {
-    if (ws) {
-      ws.close();
-    }
   }
 
   const handleDownload = () => {
